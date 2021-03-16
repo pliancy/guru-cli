@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2019", // Node.js 12
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "declaration": true,
+    "pretty": true,
+    "newLine": "lf",
+    "checkJs": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "stripInternal": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmitOnError": true,
+    "useDefineForClassFields": false,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "lib": ["ES2020"]
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/*.test.js", "**/*.test.js"]
+}
