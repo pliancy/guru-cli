@@ -27,8 +27,8 @@ export default async (cli: any): Promise<void> => {
       }
 
       cliux.action.stop(
-        `✅  ${filteredCards.length} card matche${
-          filteredCards.length > 1 ? 's' : ''
+        `✅  ${filteredCards.length} card${filteredCards.length > 1 ? 's' : ''} match${
+          filteredCards.length > 1 ? '' : 'es'
         } your collection and title\n---------------------------`,
       )
 
