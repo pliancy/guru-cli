@@ -10,14 +10,15 @@ A NodeJS based CLI tool for doing useful things against the Guru KB (<https://ge
 
 **_Note: This project is still a work in progress. It is currently in active development. Use at your own risk!_**
 
-This tool was made for us at Pliancy to solve some problems we were commonly running into. We hope it's useful to others as well!
+This tool was made for us at Pliancy to augment the Guru administration experience. We hope it's useful to others as well!
 
 It currently provides the following features:
 
-- Search all cards with a powerful query language supporting regex in the title, content, collection, and board metadata.
-- Verify any card administratively by generating an API token for that owner of that card and using it to verify it (working around Guru's limitation of only assigned verifier being able to verify a card)
-- Find and replace across all Guru cards with regex support, optional filtering, and powerful preview.
-- Backup your guru cards to JSON format.
+- *Search all cards* with a powerful query language supporting regex in the title, content, collection, and board metadata.
+- *Verify any card*. This works by generating an API token for the card's owner and using it to verify.
+- *Verify expired cards*
+- *Find and replace* across all Guru cards with regex support, optional filtering, and powerful preview.
+- *Backup your cards* to JSON format.
 
 ## Installation
 
@@ -43,15 +44,15 @@ brew install pliancy/tap/guru-cli
 
 ## Getting Started
 
-1. First, you need to authenticate to guru API. Navigate to <https://app.getguru.com/settings/api-access> and generate an API token for a **Guru admin account**
-2. Login to the cli tool
+1. First, you need to authenticate to the guru API. Navigate to <https://app.getguru.com/settings/api-access> and generate an API token for a **Guru admin account**
+2. Log in to the cli tool
 
 ```bash
 $ guru-cli login
 Login to Guru API
 -------------------
 Guru Admin Email: example@company.com
-Admin API Token: definitelymyapitokenpleasedontsteal
+Admin API Token: some-api-token
 ✅ Successfully authenticated to Guru API. You can now run guru-cli commands.
 ```
 
@@ -89,7 +90,13 @@ guru-cli verify-expired
 guru-cli verify-by-title 'card title'
 ```
 
-### Verify all cards that are in expired state in collection Engineering with "Overview" in title
+### Verify all cards that are in an expired state
+
+```bash
+guru-cli verify-expired
+```
+
+### Verify all cards that are in an expired state in collection Engineering with "Overview" in title
 
 ```bash
 guru-cli verify-expired 'collection:Engineering title:Overview'
