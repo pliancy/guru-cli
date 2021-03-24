@@ -1,6 +1,6 @@
 # Guru CLI
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pliancy/guru-cli/CI)](https://github.com/pliancy/timelyapp-sdk)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pliancy/guru-cli/CI)](https://github.com/pliancy/guru-cli)
 [![npm](https://img.shields.io/npm/v/guru-cli.svg)](https://www.npmjs.com/package/guru-cli)
 [![Downloads](https://img.shields.io/npm/dm/guru-cli.svg)](https://www.npmjs.com/package/guru-cli)
 [![Dependency Status](https://img.shields.io/david/pliancy/guru-cli)](https://david-dm.org/pliancy/guru-cli)
