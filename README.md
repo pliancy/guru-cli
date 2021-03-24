@@ -117,7 +117,7 @@ guru-cli verify-expired 'collection:Engineering title:Overview'
 guru-cli find-replace -i 'G Suite' 'Google Workspace'
 ```
 
-once you're confident in your changes affecting the proper data in the preview:
+Once you're confident in your changes affecting the proper data in the preview:
 
 ```bash
 guru-cli find-replace 'G Suite' 'Google Workspace' --confirm
@@ -125,13 +125,13 @@ guru-cli find-replace 'G Suite' 'Google Workspace' --confirm
 
 ### Find and replace across cards except for the ones that have the phrase "this is how you get ants"
 
-This one is a bit more complex because it uses a regex feature known as negitive look-ahead in the filter to accomplish filtering out the relevent cards
+This one is a bit more complex because it uses a regex feature known as negitive look-ahead in the filter to accomplish filtering out the relevant cards
 
 ```bash
 guru-cli find-replace 'Archer' 'Lana' 'content:"^(?!.*this is how you get ants)"'
 ```
 
-once you're confident in your changes affecting the proper data in the preview:
+Once you're confident in your changes affecting the proper data in the preview:
 
 ```bash
 guru-cli find-replace 'Archer' 'Lana' 'content:"^(?!.*this is how you get ants)"' --confirm
