@@ -1,4 +1,3 @@
-
 # Guru CLI
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pliancy/guru-cli/CI)](https://github.com/pliancy/timelyapp-sdk)
