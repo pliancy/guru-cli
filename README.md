@@ -1,3 +1,4 @@
+
 # Guru CLI
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pliancy/guru-cli/CI)](https://github.com/pliancy/timelyapp-sdk)
@@ -10,15 +11,17 @@ A NodeJS based CLI tool for doing useful things against the Guru KB (<https://ge
 
 **_Note: This project is still a work in progress. It is currently in active development. Use at your own risk!_**
 
-This tool was made for us at Pliancy to augment the Guru administration experience. We hope it's useful to others as well!
+This tool was made by us at Pliancy to augment the Guru administration experience. We hope it's useful to others as well!
 
 It currently provides the following features:
 
-- *Search all cards* with a powerful query language supporting regex in the title, content, collection, and board metadata.
-- *Verify any card*. This works by generating an API token for the card's owner and using it to verify.
-- *Verify expired cards*
-- *Find and replace* across all Guru cards with regex support, optional filtering, and powerful preview.
-- *Backup your cards* to JSON format.
+- Search all cards with a powerful query language supporting regex in the title, content, collection, and board metadata.
+- Verify any card. This works by generating an API token for the card's owner and using it to verify.
+- Verify expired (stale) cards.
+- Find and replace across all Guru cards with regex support, optional filtering, and powerful preview.
+- Backup your cards to JSON format.
+
+![find-replace-482742](https://user-images.githubusercontent.com/34489899/112241533-a8d31e80-8c07-11eb-874a-1a22d26097e4.gif)
 
 ## Installation
 
@@ -102,10 +105,10 @@ guru-cli verify-expired
 guru-cli verify-expired 'collection:Engineering title:Overview'
 ```
 
-### Find and replace across all cards
+### Find and replace across all cards with case insensitivity turned on (-i)
 
 ```bash
-guru-cli find-replace 'G Suite' 'Google Workspace'
+guru-cli find-replace -i 'G Suite' 'Google Workspace'
 ```
 
 once you're confident in your changes affecting the proper data in the preview:
