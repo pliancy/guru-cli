@@ -98,12 +98,6 @@ guru-cli verify-by-title 'card title'
 guru-cli verify-by-title --collection 'collection title' 'card title'
 ```
 
-### Verify all cards that are in an expired state
-
-```bash
-guru-cli verify-expired
-```
-
 ### Verify all cards that are in an expired state in collection Engineering with "Overview" in title
 
 ```bash
