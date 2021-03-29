@@ -80,12 +80,6 @@ guru-cli find 'title:Typescript|Javascript collection:Engineering'
 guru-cli find 'content:Caleb.*great guy'
 ```
 
-### Verify all cards that are in an expired (stale) state
-
-```bash
-guru-cli verify-expired
-```
-
 ### Verify a card by its title
 
 ```bash
@@ -96,6 +90,12 @@ guru-cli verify-by-title 'card title'
 
 ```bash
 guru-cli verify-by-title --collection 'collection title' 'card title'
+```
+
+### Verify all cards that are in an expired (stale) state
+
+```bash
+guru-cli verify-expired
 ```
 
 ### Verify all cards that are in an expired state in collection Engineering with "Overview" in title
@@ -113,7 +113,7 @@ guru-cli find-replace -i 'G Suite' 'Google Workspace'
 Once you're confident in your changes affecting the proper data in the preview:
 
 ```bash
-guru-cli find-replace 'G Suite' 'Google Workspace' --confirm
+guru-cli find-replace -i 'G Suite' 'Google Workspace' --confirm
 ```
 
 ### Find and replace across cards except for the ones that have the phrase "this is how you get ants"
