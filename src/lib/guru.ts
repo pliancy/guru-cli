@@ -119,6 +119,7 @@ export class Guru {
   constructor(_config: GuruConfig) {
     this.email = _config.email
     this.token = _config.token
+
     this.httpConfig = {
       baseURL: 'https://api.getguru.com/api/v1',
       auth: {
@@ -142,7 +143,7 @@ export class Guru {
         ...(axiosOptions ?? {}),
       })
       return res
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 401) {
         throw new Error('Could not authenticate to Guru, check credentials and try again.')
       }
@@ -154,10 +155,10 @@ export class Guru {
     return {
       id: cardRaw.id,
       title: cardRaw.preferredPhrase,
-      owner: cardRaw.owner.email,
+      owner: cardRaw?.owner?.email ?? this.email,
       firstName: cardRaw.owner.firstName,
       lastName: cardRaw.owner.lastName,
-      verifier: cardRaw.verifiers[0]?.user.email as string,
+      verifier: cardRaw?.verifiers?.length ? (cardRaw?.verifiers[0]?.user?.email as string) : this.email,
       collection: cardRaw.collection.name,
       boards: cardRaw.boards ? cardRaw.boards.map((board) => board.title) : [],
       content: cardRaw.content,
@@ -175,7 +176,7 @@ export class Guru {
         authenticated: true,
         message: '',
       }
-    } catch (err) {
+    } catch (err: any) {
       return {
         authenticated: false,
         message: err.message,
@@ -305,6 +306,24 @@ export class Guru {
     }
 
     return expiredCards
+  }
+
+  /**
+   * Verifies every card that is in an unverified state
+   * @returns success status
+   */
+  async getAllUnverifiedCardsRaw(): Promise<GuruCardRaw[]> {
+    const unverifiedCards = []
+
+    const cards = await this.getAllCardsRaw()
+
+    for (const card of cards) {
+      if (card.verificationState === 'NEEDS_VERIFICATION') {
+        unverifiedCards.push(card)
+      }
+    }
+
+    return unverifiedCards
   }
 
   async updateCardRaw(cardRaw: GuruCardRaw): Promise<GuruCardRaw> {

@@ -27,7 +27,7 @@ export function handleCardsFilter(
   options?: { raw: boolean },
 ): GuruCard[] | GuruCardRaw[] {
   const keywords = ['collection', 'boards', 'title', 'verifier', 'content']
-  let cards = cardsRaw.map(guru._convertCardModel)
+  let cards = cardsRaw.map((card) => guru._convertCardModel(card))
   if (!filter) {
     if (options?.raw) return cardsRaw
     return cards
