@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ["@pliancy/eslint-config-ts"],
-};
+    extends: ['@pliancy/eslint-config-ts'],
+}

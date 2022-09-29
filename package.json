@@ -16,8 +16,6 @@
     "dev": "ts-node src/cli.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
     "test": "jest",
     "test:ci": "jest --coverage",
     "test:watch": "jest --watch",
