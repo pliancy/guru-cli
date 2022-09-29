@@ -18,14 +18,15 @@
     "test": "jest",
     "test:ci": "jest --coverage",
     "test:watch": "jest --watch",
-    "build": "npm run clean && npm run lint:fix && npm run format:fix && tsc",
+    "build": "run-s -l clean test tsc",
     "build:ci": "tsc",
     "build:check": "tsc --noEmit",
     "build:watch": "npm run clean && tsc -w",
     "prepublishOnly": "npm run build",
     "semantic-release": "semantic-release",
     "qa": "run-s -l lint test clean build:check",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "tsc": "tsc"
   },
   "keywords": [
     "guru",
@@ -68,7 +69,7 @@
   "dependencies": {
     "axios": "0.27.2",
     "cac": "6.7.2",
-    "chalk": "5.0.1",
+    "chalk": "4.1.2",
     "cli-progress": "3.9.0",
     "cli-ux": "6.0.9",
     "conf": "10.2.0",
