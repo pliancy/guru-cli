@@ -14,8 +14,7 @@
   "scripts": {
     "clean": "rimraf dist coverage tmp",
     "dev": "ts-node src/cli.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest",
     "test:ci": "jest --coverage",
     "test:watch": "jest --watch",
