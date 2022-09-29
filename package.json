@@ -24,7 +24,8 @@
     "build:watch": "npm run clean && tsc -w",
     "prepublishOnly": "npm run build",
     "semantic-release": "semantic-release",
-    "qa": "run-s -l lint test clean build:check"
+    "qa": "run-s -l lint test clean build:check",
+    "postinstall": "husky install"
   },
   "keywords": [
     "guru",
