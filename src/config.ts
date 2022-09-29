@@ -1,20 +1,20 @@
-import Conf from 'conf'
+import Conf from "conf";
 
 export const conf = new Conf({
   schema: {
     auth: {
-      type: 'object',
+      type: "object",
       properties: {
         email: {
-          type: 'string',
-          format: 'email',
+          type: "string",
+          format: "email",
         },
         token: {
-          type: 'string',
+          type: "string",
         },
       },
     },
   },
-})
+});
 
-export default conf
+export default conf;
