@@ -190,21 +190,18 @@ export class Guru {
      * Gets all Guru Cards
      * @returns Collection of Guru Cards
      */
-    async getAllCardsRaw(): Promise<GuruCardRaw[]> {
-        const allCards: any[] = []
+    async getAllCardsRaw() {
+        const allCards: GuruCardRaw[] = []
 
         // get first page of articles and push into final array
         let res = await this._request('POST', '/search/cardmgr', {})
-        allCards.push(...res.data)
 
-        // check for additional pages and do them if they exist
-        while (res?.headers?.link) {
+        do {
+            allCards.push(...res.data)
             const pageLink = res?.headers?.link?.match(/(?<=<)(.*)(?=>)/gs)![0]
             if (!pageLink) break
-
-            allCards.push(...res.data)
             res = await this._request('POST', pageLink, {})
-        }
+        } while (res?.headers?.link)
 
         return allCards
     }
