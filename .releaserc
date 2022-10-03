@@ -1,6 +1,0 @@
-{
-  "extends": [
-    "@pliancy/semantic-release-config-npm"
-  ],
-  "access": "public"
-}
