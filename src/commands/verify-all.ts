@@ -9,7 +9,11 @@ import { checkAuth, handleCardsFilter } from '../lib/helpers'
 export default async (cli: any): Promise<void> => {
     cli.command('verify-all [filter]', 'Verifies all unverified cards (see README)')
         .example(
-            `Verify all cards or supply content filtering 'guru-cli verify-all content:"something to match on"'
+            `Verify all cards 'guru-cli verify-all"'
+`,
+        )
+        .example(
+            `Verify all cards with a filter 'guru-cli verify-all content:"something to match on"'
     `,
         )
         .option('-i, --ignore-case', 'Ignore case in the finding regex string')
