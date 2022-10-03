@@ -25,7 +25,6 @@
     "prepublishOnly": "npm run build",
     "semantic-release": "semantic-release",
     "qa": "run-s -l lint test clean build:check",
-    "postinstall": "husky install",
     "tsc": "tsc"
   },
   "keywords": [
