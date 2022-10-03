@@ -50,7 +50,7 @@ export default async (cli: any): Promise<void> => {
             progress.start(filteredCards.length, 0, { currentCard: '' })
             for (const card of filteredCards) {
                 progress.increment(1, { currentCard: card.title })
-                await guru.verifyCardsByTitle(card.title)
+                await guru.verifyCardByID(card)
             }
             progress.stop()
         })

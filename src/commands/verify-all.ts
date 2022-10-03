@@ -8,6 +8,10 @@ import { checkAuth, handleCardsFilter } from '../lib/helpers'
 
 export default async (cli: any): Promise<void> => {
     cli.command('verify-all [filter]', 'Verifies all unverified cards (see README)')
+        .example(
+            `Verify all cards or supply content filtering 'guru-cli verify-all content:"something to match on"'
+    `,
+        )
         .option('-i, --ignore-case', 'Ignore case in the finding regex string')
         .option('-f, --force', 'Skip confirmation, BE CAREFUL WITH THIS OPTION!')
         .action(async (filter: string, options: any) => {
@@ -47,7 +51,7 @@ export default async (cli: any): Promise<void> => {
             progress.start(filteredCards.length, 0, { currentCard: '' })
             for (const card of filteredCards) {
                 progress.increment(1, { currentCard: card.title })
-                await guru.verifyCardsByTitle(card.title)
+                await guru.verifyCardByID(card)
             }
             progress.stop()
         })

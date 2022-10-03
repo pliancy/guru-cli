@@ -21,17 +21,9 @@ export interface GuruCardRaw {
         roiEnabled: boolean
     }
     dateCreated: string
-    verifiers: Array<{
-        type: string
-        user: {
-            status: string
-            email: string
-            firstName: string
-            lastName: string
-            profilePicUrl: string
-        }
-        id: string
-    }>
+    verifiers: GuruCardVerifiers
+
+    cardVerifier?: string
 
     verificationInterval: number
     lastVerified: string
@@ -81,6 +73,42 @@ export interface GuruCardRaw {
         }
     }
 }
+
+export interface GuruCardUserVerifier {
+    type: 'user'
+    user: {
+        status: string
+        email: string
+        firstName: string
+        lastName: string
+        profilePicUrl: string
+    }
+    id: string
+}
+
+export interface GuruCardGroupVerifier {
+    type: 'user-group'
+    userGroup: {
+        name: string
+        id: string
+        modifiable: boolean
+    }
+    id: string
+}
+
+export interface GroupMember {
+    id: string
+    user: {
+        status: string
+        email: string
+        lastName: string
+        firstName: string
+        profilePicUrl: string
+    }
+    dateCreated: string
+}
+
+export type GuruCardVerifiers = GuruCardUserVerifier[] | GuruCardGroupVerifier[]
 
 export interface GuruCard {
     [key: string]: any
@@ -158,9 +186,7 @@ export class Guru {
             owner: cardRaw?.owner?.email ?? this.email,
             firstName: cardRaw.owner.firstName,
             lastName: cardRaw.owner.lastName,
-            verifier: cardRaw?.verifiers?.length
-                ? (cardRaw?.verifiers[0]?.user?.email as string)
-                : this.email,
+            verifier: cardRaw?.cardVerifier ?? '',
             collection: cardRaw.collection.name,
             boards: cardRaw.boards ? cardRaw.boards.map((board) => board.title) : [],
             content: cardRaw.content,
@@ -169,6 +195,31 @@ export class Guru {
             verificationInterval: cardRaw.verificationInterval,
             link: `https://app.getguru.com/card/${cardRaw.slug}`,
         }
+    }
+
+    async getGroupMembers(groupID: string): Promise<GroupMember[]> {
+        const res = await this._request('GET', `groups/${groupID}/members`)
+        return res.data
+    }
+
+    async getVerifier(verifiers: GuruCardVerifiers) {
+        let verifier = ''
+
+        if (verifiers[0]?.type === 'user-group') {
+            const groupID = verifiers[0]?.userGroup?.id
+
+            if (!groupID) return ''
+
+            const members = await this.getGroupMembers(groupID)
+
+            if (!members.length) return ''
+
+            verifier = members[0]?.user?.email
+        } else {
+            verifier = verifiers?.length ? verifiers[0]?.user?.email : this.email
+        }
+
+        return verifier
     }
 
     async authenticated(): Promise<{ authenticated: boolean; message: string }> {
@@ -203,6 +254,10 @@ export class Guru {
             res = await this._request('POST', pageLink, {})
         } while (res?.headers?.link)
 
+        for (const card of allCards) {
+            card.cardVerifier = await this.getVerifier(card.verifiers)
+        }
+
         return allCards
     }
 
@@ -229,42 +284,6 @@ export class Guru {
         if (!res.length) throw new Error(`Unable to find card with title: ${cardTitle}`)
         const cards = res
         return cards.map(this._convertCardModel)
-    }
-
-    async verifyCardsByTitle(cardTitle: string): Promise<GuruStatusResponse> {
-        let cards
-        try {
-            cards = await this.getCardsByTitle(cardTitle)
-        } catch {
-            return {
-                status: 'ERROR',
-                message: `Could not find card with title of ${cardTitle}`,
-            }
-        }
-        for (const card of cards) {
-            const impersonationToken = await this.createImpersonationToken(card.verifier)
-            await this._request(
-                'POST',
-                '/cards/bulkop',
-                {
-                    action: { type: 'verify-card' },
-                    items: { type: 'id', cardIds: [card.id] },
-                },
-                impersonationToken
-                    ? {
-                          auth: {
-                              username: card.verifier,
-                              password: impersonationToken,
-                          },
-                      }
-                    : undefined,
-            )
-        }
-
-        return {
-            status: 'OK',
-            message: `Success verifying "${cards.length}" card(s) with title of ${cardTitle}`,
-        }
     }
 
     async verifyCardByID(card: any): Promise<GuruStatusResponse> {
@@ -325,17 +344,11 @@ export class Guru {
 
         const cards = await this.getAllCardsRaw()
 
-        for (const card of cards) {
-            if (card.verificationState === 'NEEDS_VERIFICATION') {
-                unverifiedCards.push(card)
-            }
-        }
-
-        return unverifiedCards
+        return cards.filter((c) => c.verificationState === 'NEEDS_VERIFICATION')
     }
 
     async updateCardRaw(cardRaw: GuruCardRaw): Promise<GuruCardRaw> {
-        const verifierEmail = cardRaw.verifiers[0]?.user.email
+        const verifierEmail = cardRaw.cardVerifier
         if (!verifierEmail) throw new Error('Unable to find verifier email in card data')
         const { data: res } = await this._request('PUT', `/cards/${cardRaw.id}`, cardRaw, {
             auth: {
