@@ -7,21 +7,22 @@ import { GuruCard } from '../lib/guru'
 import { checkAuth, handleCardsFilter } from '../lib/helpers'
 
 export default async (cli: any): Promise<void> => {
-    cli.command(
-        'verify-expired [filter]',
-        'Verifies all expired cards with optional filtering (see README)',
-    )
+    cli.command('verify-all [filter]', 'Verifies all unverified cards (see README)')
+        .example(
+            `Verify all cards or supply content filtering 'guru-cli verify-all content:"something to match on"'
+    `,
+        )
         .option('-i, --ignore-case', 'Ignore case in the finding regex string')
         .option('-f, --force', 'Skip confirmation, BE CAREFUL WITH THIS OPTION!')
         .action(async (filter: string, options: any) => {
             checkAuth()
-            cliux.action.start('Gathering all expired cards')
-            const expiredCards = await guru.getAllExpiredCardsRaw()
-            const filteredCards = handleCardsFilter(filter, expiredCards, options) as GuruCard[]
-            cliux.action.stop(`✅ ${filteredCards.length} expired cards found.`)
+            cliux.action.start('Gathering all unverified cards')
+            const unverifiedCards = await guru.getAllUnverifiedCardsRaw()
+            const filteredCards = handleCardsFilter(filter, unverifiedCards, options) as GuruCard[]
+            cliux.action.stop(`✅ ${filteredCards.length} unverified cards found.`)
 
             if (!filteredCards.length) {
-                console.log('You have no expired cards currently!')
+                console.log('You have no unverified cards currently!')
                 return
             }
 
@@ -32,14 +33,14 @@ export default async (cli: any): Promise<void> => {
 
             if (!options.force) {
                 const confirm = await cliux.confirm(
-                    `This will verify ${filteredCards.length} cards currently in expired state. Continue? (Y/n)`,
+                    `This will verify ${filteredCards.length} cards currently in an unverified state. Continue? (Y/n)`,
                 )
                 if (!confirm) return
             }
 
             const progress = new Progress.Bar(
                 {
-                    format: `Verifying Expired Cards ${chalk.hex('#7F4BAE')(
+                    format: `Verifying Cards ${chalk.hex('#7F4BAE')(
                         '{bar}',
                     )} {percentage}% | Current Card: {value}/{total} | Name: ${chalk.bold.hex(
                         '#D7E150',
