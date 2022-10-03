@@ -30,7 +30,6 @@ jobs:
         # Run semantic release and copy updated package.json back to the root of the repo.
         run: |
           yarn semantic-release
-          cp dist/package.json .
           npx pinst --enable
       # Commit changes to package.json and README.md
       - name: Auto Commit
