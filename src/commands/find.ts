@@ -1,4 +1,4 @@
-import cliux from 'cli-ux'
+import { CliUx } from '@oclif/core'
 import chalk from 'chalk'
 
 import guru from '../lib/guruClient'
@@ -28,15 +28,15 @@ guru-cli find 'verifier:"^bob@example\\\\.com$"'
         .option('-i, --ignore-case', 'Ignore case in the finding regex string')
         .action(async (filter: string, options: any) => {
             checkAuth()
-            cliux.action.start('Searching for cards')
+            CliUx.ux.action.start('Searching for cards')
             const cardsRaw = await guru.getAllCardsRaw()
             const filteredCards = handleCardsFilter(filter, cardsRaw, options) as GuruCard[]
             if (!filteredCards.length) {
-                cliux.action.stop(`❌ ${filteredCards.length} cards found matching your filter`)
+                CliUx.ux.action.stop(`❌ ${filteredCards.length} cards found matching your filter`)
                 return
             }
 
-            cliux.action.stop(
+            CliUx.ux.action.stop(
                 `✅  ${filteredCards.length} cards matching your filter\n---------------------------`,
             )
             filteredCards.map((card) =>

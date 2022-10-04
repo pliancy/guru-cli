@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import cliux from 'cli-ux'
+import { CliUx } from '@oclif/core'
 
 import guru from '../lib/guruClient'
 import { GuruCard } from '../lib/guru'
@@ -12,7 +12,7 @@ export default async (cli: any): Promise<void> => {
 
         .action(async (title: string, options?: any) => {
             checkAuth()
-            cliux.action.start('Searching for cards')
+            CliUx.ux.action.start('Searching for cards')
             const cardsRaw = await guru.getAllCardsRaw()
             let filteredCards = handleCardsFilter(
                 `title:"^${title}$"`,
@@ -27,11 +27,11 @@ export default async (cli: any): Promise<void> => {
             }
 
             if (!filteredCards.length) {
-                cliux.action.stop(`❌ ${filteredCards.length} cards found matching your title`)
+                CliUx.ux.action.stop(`❌ ${filteredCards.length} cards found matching your title`)
                 return
             }
 
-            cliux.action.stop(
+            CliUx.ux.action.stop(
                 `✅  ${filteredCards.length} card${filteredCards.length > 1 ? 's' : ''} match${
                     filteredCards.length > 1 ? '' : 'es'
                 } your collection and title\n---------------------------`,
@@ -45,12 +45,12 @@ export default async (cli: any): Promise<void> => {
                 ),
             )
 
-            const confirm = await cliux.confirm(
+            const confirm = await CliUx.ux.confirm(
                 'Do you wish to verify the identified card(s)? (Y/n)',
             )
             if (!confirm) return
 
-            cliux.action.start(`Verifying ${title}`)
+            CliUx.ux.action.start(`Verifying ${title}`)
 
             for (const card of filteredCards) {
                 await guru.verifyCardByID(card)
