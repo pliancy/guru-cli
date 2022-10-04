@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import Progress from 'cli-progress'
-import cliux from 'cli-ux'
+import { CliUx } from '@oclif/core'
 
 import guru from '../lib/guruClient'
 import { GuruCard } from '../lib/guru'
@@ -20,10 +20,10 @@ export default async (cli: any): Promise<void> => {
         .option('-f, --force', 'Skip confirmation, BE CAREFUL WITH THIS OPTION!')
         .action(async (filter: string, options: any) => {
             checkAuth()
-            cliux.action.start('Gathering all unverified cards')
+            CliUx.ux.action.start('Gathering all unverified cards')
             const unverifiedCards = await guru.getAllUnverifiedCardsRaw()
             const filteredCards = handleCardsFilter(filter, unverifiedCards, options) as GuruCard[]
-            cliux.action.stop(`✅ ${filteredCards.length} unverified cards found.`)
+            CliUx.ux.action.stop(`✅ ${filteredCards.length} unverified cards found.`)
 
             if (!filteredCards.length) {
                 console.log('You have no unverified cards currently!')
@@ -36,7 +36,7 @@ export default async (cli: any): Promise<void> => {
             }
 
             if (!options.force) {
-                const confirm = await cliux.confirm(
+                const confirm = await CliUx.ux.confirm(
                     `This will verify ${filteredCards.length} cards currently in an unverified state. Continue? (Y/n)`,
                 )
                 if (!confirm) return

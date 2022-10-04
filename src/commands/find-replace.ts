@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import cliux from 'cli-ux'
+import { CliUx } from '@oclif/core'
 
 import guru from '../lib/guruClient'
 import { GuruCardRaw } from '../lib/guru'
@@ -22,7 +22,7 @@ export default async (cli: any): Promise<void> => {
         )
         .action(async (find: string, replace: string, filter: string, options: any) => {
             checkAuth()
-            cliux.action.start('Finding cards based on filter')
+            CliUx.ux.action.start('Finding cards based on filter')
             const cardsRaw = await guru.getAllCardsRaw()
             const filteredCards = handleCardsFilter(filter, cardsRaw, options, {
                 raw: true,
@@ -34,10 +34,10 @@ export default async (cli: any): Promise<void> => {
             )
 
             if (!matchedCards.length) {
-                cliux.action.stop(`❌ ${matchedCards.length} cards found matching "${find}"`)
+                CliUx.ux.action.stop(`❌ ${matchedCards.length} cards found matching "${find}"`)
                 return
             }
-            cliux.action.stop(`✅ ${matchedCards.length} cards found matching "${find}"`)
+            CliUx.ux.action.stop(`✅ ${matchedCards.length} cards found matching "${find}"`)
 
             if (!options.confirm) {
                 console.log('Preview:\n------------------------')
@@ -81,14 +81,14 @@ export default async (cli: any): Promise<void> => {
             }
 
             if (!options.force) {
-                const backup = await cliux.confirm(
+                const backup = await CliUx.ux.confirm(
                     'Would you like to backup card data before making changes? (RECOMMENDED) (Y/n)',
                 )
                 if (backup) {
                     await backupCards('./')
                 }
 
-                const confirm = await cliux.confirm(
+                const confirm = await CliUx.ux.confirm(
                     `This will replace all instances matching "${chalk.bold.redBright(
                         find,
                     )}" with ${chalk.bold.green(replace)} in ${

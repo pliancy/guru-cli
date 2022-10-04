@@ -1,4 +1,4 @@
-import cliux from 'cli-ux'
+import { CliUx } from '@oclif/core'
 
 import config from '../config'
 import { Guru } from '../lib/guru'
@@ -7,8 +7,8 @@ export default async (cli: any): Promise<void> => {
     cli.command('login', 'login and save credentials for guru cli').action(async () => {
         config.clear()
         console.log('Login to Guru API\n------------------------')
-        const email = await cliux.prompt('Guru Admin Email')
-        const token = await cliux.prompt('Admin API Token')
+        const email = await CliUx.ux.prompt('Guru Admin Email')
+        const token = await CliUx.ux.prompt('Admin API Token')
         const g = new Guru({
             email,
             token,
