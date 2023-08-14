@@ -8,7 +8,7 @@
 
 A NodeJS based CLI tool for doing useful things against the Guru KB (<https://getguru.com>)
 
-**_Note: This project is still a work in progress. It is currently in active development. Use at your own risk!_**
+**_Note: This tool is an open source project that is not officially supported by Guru. Use at your own risk._**
 
 This tool was made by us at Pliancy to augment the Guru administration experience. We hope it's useful to others as well!
 
