@@ -43,42 +43,42 @@
     "url": "https://github.com/pliancy/guru-cli"
   },
   "devDependencies": {
-    "@digitalroute/cz-conventional-changelog-for-jira": "7.4.0",
+    "@digitalroute/cz-conventional-changelog-for-jira": "7.5.1",
     "@pliancy/eslint-config-ts": "0.1.0",
     "@pliancy/semantic-release-config-npm": "2.2.0",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "8.0.6",
-    "@semantic-release/npm": "9.0.1",
-    "@types/cli-progress": "3.9.0",
-    "@types/jest": "29.1.0",
-    "@types/node": "17.0.21",
-    "commitizen": "4.2.5",
+    "@semantic-release/github": "8.1.0",
+    "@semantic-release/npm": "9.0.2",
+    "@types/cli-progress": "3.11.5",
+    "@types/jest": "29.5.12",
+    "@types/node": "17.0.45",
+    "commitizen": "4.3.0",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "8.0.1",
-    "jest": "29.1.1",
-    "lint-staged": "13.0.3",
+    "husky": "8.0.3",
+    "jest": "29.7.0",
+    "lint-staged": "13.3.0",
     "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
     "semantic-release": "19.0.5",
-    "ts-jest": "29.0.3",
-    "ts-node": "10.9.1",
-    "typescript": "4.8.4"
+    "ts-jest": "29.1.2",
+    "ts-node": "10.9.2",
+    "typescript": "4.9.5"
   },
   "engines": {
     "node": ">=12"
   },
   "volta": {
-    "node": "14.20.1"
+    "node": "14.21.3"
   },
   "dependencies": {
-    "@oclif/core": "1.16.4",
+    "@oclif/core": "1.26.2",
     "axios": "0.27.2",
-    "cac": "6.7.2",
+    "cac": "6.7.14",
     "chalk": "4.1.2",
-    "cli-progress": "3.9.0",
+    "cli-progress": "3.12.0",
     "conf": "10.2.0",
-    "search-query-parser": "1.5.5",
-    "tslib": "2.4.0"
+    "search-query-parser": "1.6.0",
+    "tslib": "2.6.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
