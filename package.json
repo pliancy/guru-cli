@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "@oclif/core": "1.16.4",
-    "axios": "0.27.2",
+    "axios": "1.6.8",
     "cac": "6.7.2",
     "chalk": "4.1.2",
     "cli-progress": "3.9.0",
