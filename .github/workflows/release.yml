@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2
         with:
           fetch-depth: 0
           token: ${{ secrets.PLIBOT_PAT }}
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 # v2
         with:
           node-version: 16
       - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
           npx pinst --enable
       # Commit changes to package.json and README.md
       - name: Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
         env:
           SKIP_COMMITIZEN: true
         with:
