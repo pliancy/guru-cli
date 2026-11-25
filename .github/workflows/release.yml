@@ -7,33 +7,52 @@ on:
 
 jobs:
   release:
+    permissions:
+      id-token: write # required for OIDC
+      # required for semantic-release
+      contents: write
+      pull-requests: write
+      issues: write
     name: Release
     runs-on: ubuntu-latest
     steps:
+      # Generate a temporary app token for release and new version back
+      - name: Generate scoped GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
+        with:
+          client-id: ${{ vars.RELEASE_WRITE_BACK_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_WRITE_BACK_PRIVATE_KEY }}
+
       - name: Checkout
-        uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
-          token: ${{ secrets.PLIBOT_PAT }}
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+
       - name: Setup Node.js
-        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 # v2
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: 16
+          node-version: 24
+
       - name: Install dependencies
-        run: yarn
+        run: yarn --ignore-scripts
+
       - name: Build
         run: yarn build
+
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         # Run semantic release and copy updated package.json back to the root of the repo.
         run: |
           yarn semantic-release
           npx pinst --enable
       # Commit changes to package.json and README.md
+
       - name: Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
+        uses: stefanzweifel/git-auto-commit-action@d0b01107b5db882071f96de5dd4b54961ea93f4c # v7
         env:
           SKIP_COMMITIZEN: true
         with:
