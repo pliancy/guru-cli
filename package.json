@@ -68,11 +68,12 @@
     "node": ">=12"
   },
   "volta": {
-    "node": "26.13.1"
+    "node": "26.13.1",
+    "yarn": "1.22.22"
   },
   "dependencies": {
     "@oclif/core": "1.16.4",
-    "axios": "0.27.2",
+    "axios": "1.21.1",
     "cac": "6.7.2",
     "chalk": "4.1.2",
     "cli-progress": "3.9.0",
